@@ -15,5 +15,9 @@
   "dependencies": {
     "express": "^4.17.3",
     "express-handlebars": "^6.0.2"
-  }
+  },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/ShortyLongsides/Meadowlark"
+    }
 }

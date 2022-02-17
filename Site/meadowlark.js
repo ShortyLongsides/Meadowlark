@@ -1,7 +1,10 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
+const fortune = require('./lib/fortune');
+
 const app = express();
 const port = process.env.PORT || 3000;
+
 
 app.use(express.static(__dirname + '/public'));
 
@@ -11,9 +14,8 @@ app.engine('handlebars',expressHandlebars.engine({
 }));
 app.set('view engine', 'handlebars');
 
-app.get('/', (req, res) => {
-    let randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)];
-    res.render('home', {fortune: randomFortune});
+app.get('/', (req, res) => { 
+    res.render('home', {fortune: fortune.getFortune});
 });
 
 app.get('/about', (req, res) => res.render('about'));
@@ -33,10 +35,3 @@ app.listen(port, () => console.log(
     'Press Ctrl-C to terminate'
 ));
 
-const fortunes = [
-'Conquer your fears or they will conquer you',
-'Rivers need springs',
-'Do not fear what you do not know',
-'You will have a pleasant surprise',
-'You will die alone and poorly dressed'
-];
