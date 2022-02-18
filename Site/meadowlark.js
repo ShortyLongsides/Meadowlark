@@ -1,6 +1,6 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
-const fortune = require('./lib/fortune');
+const handlers = require('./lib/handlers');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,21 +14,13 @@ app.engine('handlebars',expressHandlebars.engine({
 }));
 app.set('view engine', 'handlebars');
 
-app.get('/', (req, res) => { 
-    res.render('home', {fortune: fortune.getFortune});
-});
+app.get('/', handlers.home);
 
-app.get('/about', (req, res) => res.render('about'));
+app.get('/', handlers.about);
 
-app.use((req,res) => {
-    res.status(404);
-    res.render('404');
-});
+app.use(handlers.notFound);
 
-app.use((req,res) => {
-    res.status(500);
-    res.render('500');
-});
+app.use(handlers.serverError);
 
 app.listen(port, () => console.log(
     `Express started on http://localhost:${port}; ` +
